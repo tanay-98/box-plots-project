@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request
-from matplotlib.pyplot import figure
 from . import mysql
 import pandas as pd
 import plotly.express as px
