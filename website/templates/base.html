@@ -41,7 +41,7 @@
         <h2 align="center">Box-Plots</h2>
         <div class="form-group">
           <label for="query"
-            >SQL Query (Template - SELECT * FROM Moody2022_new;)</label
+            >SQL Query (Schema for reference: table_name = Moody2022_new columns=(SCORE, GRADE, DOZES_OFF, TEXTING_IN_CLASS, PARTICIPAION) </label
           >
           <input
             type="text"
@@ -56,7 +56,8 @@
       </form>
     </div>
 
-    <div id="chart" class="container chart"></div>
+    <div id="chart_o" class="container chart_o"></div>
+    <div id="chart_s" class="container chart_s"></div>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -75,8 +76,10 @@
     ></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript">
-      var graphs = {{ graphJSON | safe }};
-      Plotly.plot('chart',graphs,{});
+      var graphs_o = {{ graphJSON_o | safe }};
+      var graphs_s = {{ graphJSON_s | safe }};
+      Plotly.plot('chart_o',graphs_o,{});
+      Plotly.plot('chart_s',graphs_s,{});
     </script>
   </body>
 </html>

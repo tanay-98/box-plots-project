@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Blueprint, render_template, request
 from matplotlib.pyplot import figure
 from . import mysql
@@ -12,23 +11,26 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        query = request.form.get('query')
-        
-        
-        
+        query_s = request.form.get('query')
+        query_o = "SELECT * FROM Moody2022_new;"
+
         cur = mysql.connection.cursor()
-        cur.execute(query)
         
+        cur.execute(query_o)
         df = pd.DataFrame(cur.fetchall())
-
-        #TODO - Delete this
-        print(query)
         print(len(df))
-
         fig = px.box(df, y="SCORE", x="GRADE")
 
-        graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        graphJSON_o = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-        return render_template("base.html", graphJSON=graphJSON)
+        cur.execute(query_s)
+        df = pd.DataFrame(cur.fetchall())
+        print(df.head())
+        fig = px.box(df, y="SCORE", x="GRADE")
+
+        graphJSON_s = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+        return render_template("base.html", graphJSON_o=graphJSON_o, graphJSON_s=graphJSON_s)
 
     return render_template("base.html")
