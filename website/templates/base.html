@@ -35,6 +35,18 @@
         </div>
       </div>
     </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        {% if category == 'error' %}
+            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% endwith %}
 
     <div class="container">
       <form method="post">
@@ -52,7 +64,12 @@
           />
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" name="submit_btn" value="cq" style="margin-right:5%;">Submit</button>
+        <button type="submit" class="btn btn-primary" name="submit_btn" value="sq1" style="margin-right:5%;">Sample Query 1</button>
+        <button type="submit" class="btn btn-primary" name="submit_btn" value="sq2" style="margin-right:5%;">Sample Query 2</button>
+        <button type="submit" class="btn btn-primary" name="submit_btn" value="sq3" style="margin-right:5%;">Sample Query 3</button>
+
+
       </form>
     </div>
 
