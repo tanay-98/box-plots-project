@@ -19,7 +19,7 @@ def home():
         
         cur.execute(query_o)
         df = pd.DataFrame(cur.fetchall())
-        print(len(df))
+        print(query_o, "executed successfully. Shape of results - ", df.shape)
         fig = go.Figure()
         for grade in grade_col:
             fig.add_trace(go.Box(y=df[df.GRADE.eq(grade)]['SCORE'], name=grade, 
@@ -43,7 +43,7 @@ def home():
             
             cur.execute(query_s)
             df = pd.DataFrame(cur.fetchall())
-            print(df.head())
+            print(query_s, "executed successfully. Shape of results", df.shape)
 
             fig = go.Figure()
             for grade in grade_col:
