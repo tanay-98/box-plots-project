@@ -51,7 +51,23 @@
     <div class="container">
       <form method="post">
         <h2 align="center">Box-Plots</h2>
-        <div class="form-group">
+        <h3 align="left" style="margin-top: 5%;">Dataset</h3>
+        <br />
+        <div class="container" id="dataset">
+          <table id="dataset-table" class="display" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>SCORE</th>
+                <th>GRADE</th>
+                <th>DOZES_OFF</th>
+                <th>TEXTING_IN_CLASS</th>
+                <th>PARTICIPATION</th>
+              </tr>
+            </thead>
+          </table>
+          <br />
+        </div>
+        <div class="form-group" style="margin-top:5%;">
           <label for="query"
             >SQL Query (Schema for reference: table_name = Moody2022_new columns=(SCORE, GRADE, DOZES_OFF, TEXTING_IN_CLASS, PARTICIPAION) </label
           >
@@ -73,7 +89,7 @@
       </form>
     </div>
 
-    <div id="chart_o" class="container chart_o"></div>
+    <!-- <div id="chart_o" class="container chart_o"></div> -->
     <div id="chart_s" class="container chart_s"></div>
 
     <script
@@ -93,10 +109,36 @@
     ></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript">
-      var graphs_o = {{ graphJSON_o | safe }};
       var graphs_s = {{ graphJSON_s | safe }};
-      Plotly.plot('chart_o',graphs_o,{});
       Plotly.plot('chart_s',graphs_s,{});
+    </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.datatables.net/r/dt/dt-1.10.22/datatables.min.css"
+        />
+        <script
+          type="text/javascript"
+          src="https://cdn.datatables.net/r/dt/dt-1.10.22/datatables.min.js"
+        ></script>
+    <script>
+      var data = {{ dataset | safe }};
+      $(document).ready(function () {
+        $('#dataset-table').DataTable({
+          data: data,
+          scrollY: "300px",
+          pageLength: 100, 
+          columns: [
+            { data: "SCORE" },
+            { data: "GRADE" },
+            { data: "DOZES_OFF" },
+            { data: "TEXTING_IN_CLASS" },
+            { data: "PARTICIPATION" },
+          ]
+        });
+      });
     </script>
   </body>
 </html>
